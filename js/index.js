@@ -4,14 +4,17 @@ var titleSelected = null;
 var errors = 0;
 
 const board = generateUniqueSudoku();
+console.log(checkValidSudoku(board));
 
-solutions = []
-console.log(board);
+console.table(board);
+
+solutions = [];
 solveSudoku(board, 0, 0);
-console.log(solutions.length)
-console.log(solutions[0]);
+// check if the generated sudoku table has unique solution
+console.log(solutions.length);
 
 var solution = solutions[0];
+console.table(solution);
 
 window.onload = function() {
     setGame();

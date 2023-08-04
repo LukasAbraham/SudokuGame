@@ -1,6 +1,6 @@
 var solutions = []
 
-const origin = [
+const base = [
     [1, 2, 3, 4, 5, 6, 7, 8, 9],
     [4, 5, 6, 7, 8, 9, 1, 2, 3],
     [7, 8, 9, 1, 2, 3, 4, 5, 6],
@@ -12,7 +12,6 @@ const origin = [
     [9, 7, 8, 3, 1, 2, 6, 4, 5],
 ];
 
-console.log(JSON.parse(JSON.stringify(origin)))
 var numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 var cells = [];
 for (let row = 0; row < 9; row++) {
@@ -99,8 +98,8 @@ function swap3X3Cols(board, c1, c2) {
     }
 }
 
-function shuffleArray(copy) {
-    var copy = copy.slice(0);
+function shuffleArray(array) {
+    var copy = array.slice(0);
     for (let i = copy.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
         [copy[i], copy[j]] = [copy[j], copy[i]];
@@ -138,6 +137,35 @@ function checkPossiblePosition(board, r, c, num) {
     return true;
 }
 
+function checkValidSudoku(board) {
+    const rowSet = new Set();
+    const colSet = new Set();
+    const boxSet = new Set();
+    for(let i = 0; i < 9; i++) {
+        for(let j = 0; j < 9; j++) {
+            const rowNumber = board[i][j];
+            const colNumber = board[j][i];
+            const boxNumber = board[3 * Math.floor(i/3) + Math.floor(j/3)][((i * 3) % 9) + (j % 3)];
+            if(rowNumber !== 0) {
+                if(rowSet.has(rowNumber)) return false;
+                rowSet.add(rowNumber);
+            }
+            if(colNumber !== 0) {
+                if(colSet.has(colNumber)) return false;
+                colSet.add(colNumber);
+            }
+            if(boxNumber !== 0) {
+                if(boxSet.has(boxNumber)) return false;
+                boxSet.add(boxNumber);
+            }
+        }
+        rowSet.clear();
+        colSet.clear();
+        boxSet.clear();
+    }
+    return true;
+}
+
 function solveSudoku(board, x, y) {
     if (x === 9) {
         solutions.push(JSON.parse(JSON.stringify(board)));
@@ -162,19 +190,20 @@ function solveSudoku(board, x, y) {
 }
 
 function generateCompleteBoard() {
-    var copy = origin.slice(0);
+    var copy = base.slice(0);
     shuffleNumbers(copy);
     shuffleRows(copy);
     shuffleCols(copy);
     shuffle3X3Rows(copy);
     shuffle3X3Cols(copy);
-    console.log(JSON.parse(JSON.stringify(copy)))
     return copy;
 }
 
 
 function generateUniqueSudoku() {
     let board = generateCompleteBoard();
+    console.log(checkValidSudoku(board));
+
     let positions = shuffleArray(cells);
 
     while (positions.length > 0) {
@@ -189,7 +218,6 @@ function generateUniqueSudoku() {
             board[row][col] = removedNumber;
         }
     }
-    console.log(JSON.parse(JSON.stringify(board)))
     return board;
 }
 
