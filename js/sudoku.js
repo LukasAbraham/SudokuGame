@@ -1,5 +1,13 @@
 var solutions = []
 
+var cells = [];
+
+for (let row = 0; row < 9; row++) {
+    for (let col = 0; col < 9; col++) {
+        cells.push({ row, col });
+    }
+}
+
 function checkPossiblePosition(board, r, c, n) {
     for (let i = 0; i < 9; i++) {
         if (board[i][c] === n) return false;
@@ -18,6 +26,28 @@ function checkPossiblePosition(board, r, c, n) {
 
     return true;
 }
+
+
+function hasSolution(board) {
+    for (let i = 0; i < 9; i++) {
+        for (let j = 0; j < 9; j++) {
+            if (board[i][j] === 0) {
+                for (let n = 1; n <= 9; n++) {
+                    if (checkPossiblePosition(board, i, j, n)) {
+                        board[i][j] = n;
+                        if (hasSolution(board)) {
+                            return true;
+                        }
+                        board[i][j] = 0;
+                    }
+                }
+                return false;
+            }
+        }
+    }
+    return true;
+}
+
 
 function solveSudoku(board, x, y) {
     if (x === 9) {
@@ -49,34 +79,44 @@ function shuffleArray(array) {
     }
 }
 
+// function generateCompleteBoard() {
+//     const board = Array.from({ length: 9 }, () => Array(9).fill(0));
+//     const numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+
+//     for (let row = 0; row < 9; row++) {
+//         shuffleArray(numbers);
+//         for (let col = 0; col < 9; col++) {
+//             for (let num of numbers) {
+//                 if (checkPossiblePosition(board, row, col, num)) {
+//                     board[row][col] = num;
+//                     break;
+//                 }
+//             }
+//         }
+//     }
+//     return board;
+// }
+
+
 function generateCompleteBoard() {
     const board = Array.from({ length: 9 }, () => Array(9).fill(0));
     const numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+    const copy = cells.slice(0);
 
-    for (let row = 0; row < 9; row++) {
-        shuffleArray(numbers);
-        for (let col = 0; col < 9; col++) {
-            for (let num of numbers) {
-                if (checkPossiblePosition(board, row, col, num)) {
-                    board[row][col] = num;
-                    break;
-                }
-            }
-        }
+    while(copy.length > 0) {
+        var idx = Math.floor(Math.random() * copy.length());
+        var { r, c } = copy[idx];
+        copy.splice(idx, 1);
+        board[r][c] = 
+
     }
     return board;
 }
 
+
 function generateUniqueSudoku() {
     let board = generateCompleteBoard();
     console.log(board);
-    let cells = [];
-
-    for (let row = 0; row < 9; row++) {
-        for (let col = 0; col < 9; col++) {
-            cells.push({ row, col });
-        }
-    }
 
     shuffleArray(cells);
 
@@ -88,7 +128,7 @@ function generateUniqueSudoku() {
         let testBoard = JSON.parse(JSON.stringify(board));
         solutions = [];
         solveSudoku(testBoard, 0, 0);
-        if(solutions.length != 1) {
+        if (solutions.length != 1) {
             board[row][col] = removedNumber;
         }
     }
@@ -104,23 +144,3 @@ console.log(solutions.length)
 console.log(solutions[0]);
 
 
-// function hasSolution(board) {
-//     for (let i = 0; i < 9; i++) {
-//       for (let j = 0; j < 9; j++) {
-//         if (board[i][j] === 0) {
-//           for (let n = 1; n <= 9; n++) {
-//             if (checkPossiblePosition(board, i, j, n)) {
-//               board[i][j] = n;
-//               if (hasSolution(board)) {
-//                 return true;
-//               }
-//               board[i][j] = 0;
-//             }
-//           }
-//           return false;
-//         }
-//       }
-//     }
-//     return true;
-//   }
-  

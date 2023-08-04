@@ -3,6 +3,14 @@ var titleSelected = null;
 
 var errors = 0;
 
+const board = generateUniqueSudoku();
+
+solutions = []
+console.log(board);
+solveSudoku(board, 0, 0);
+console.log(solutions.length)
+console.log(solutions[0]);
+
 var solution = solutions[0];
 
 window.onload = function() {
