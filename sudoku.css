@@ -47,7 +47,6 @@ hr {
     height: 54px;
     border: 1px solid lightgray;
 
-    /* Text */
     font-size: 30px;
     font-weight: bold;
     display: flex;
@@ -70,7 +69,6 @@ hr {
     height: 54px;
     border: 1px solid lightgray;
 
-    /* Text */
     font-size: 30px;
     font-weight: bold;
     display: flex;
@@ -218,3 +216,61 @@ hr {
     cursor: pointer;
 }
 
+@media screen and (max-width: 1200px) {
+    #board {
+        width: 340px;
+        height: 310px;
+    }
+
+    .tile {
+        width: 32.16px; 
+        height: 32.4px; 
+        font-size: 20px; 
+    }
+
+    .tile-start {
+        width: 32.16px; 
+        height: 32.4px; 
+        font-size: 20px; 
+    }
+    #digits {
+        width: 324px;
+        height: 30px;
+    }
+    
+    .number {
+        width: 30px;
+        height: 30px;
+        font-size: 20px; 
+    }
+}
+
+
+@media screen and (min-width: 1400px) {
+    #board {
+        width: 680px;
+        height: 645px;
+    }
+
+    .tile {
+        width: 70px; 
+        height: 70px; 
+        font-size: 40px; 
+    }
+
+    .tile-start {
+        width: 70px; 
+        height: 70px; 
+        font-size: 40px; 
+    }
+    #digits {
+        width: 686px;
+        height: 70px;
+    }
+    
+    .number {
+        width: 70px;
+        height: 70px;
+        font-size: 30px; 
+    }
+}
