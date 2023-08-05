@@ -1,6 +1,4 @@
 # Online Sudoku Game
-<hr>
-# About
 Javascript Sudoku game for enthusiasts to sharpen their Sudoku-solving skills.
 <ul>
   <li>Features:</li>
