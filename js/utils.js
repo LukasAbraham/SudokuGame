@@ -220,4 +220,3 @@ function generateUniqueSudoku() {
     }
     return board;
 }
-
